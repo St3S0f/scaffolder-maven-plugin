@@ -13,7 +13,7 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>st3s0.scaffoldermavenplugin</groupId>
+                <groupId>st3s0f.scaffoldermavenplugin</groupId>
                 <artifactId>scaffolder-maven-plugin</artifactId>
                 <version>1.0-SNAPSHOT</version>
                 <configuration></configuration>
