@@ -1,4 +1,4 @@
-package st3s0.scaffoldermavenplugin.mojo;
+package st3s0f.scaffoldermavenplugin.mojo;
 
 
 import java.nio.file.Path;

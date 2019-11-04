@@ -1,4 +1,4 @@
-package st3s0.scaffoldermavenplugin.mojo;
+package st3s0f.scaffoldermavenplugin.mojo;
 
 import io.vavr.Tuple;
 import io.vavr.collection.List;
@@ -8,14 +8,14 @@ import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 import org.joox.Match;
-import st3s0.scaffoldermavenplugin.Utils;
+import st3s0f.scaffoldermavenplugin.Utils;
 
 import java.nio.file.Path;
 import java.util.function.BiFunction;
 
 import static java.lang.String.format;
 import static org.joox.JOOX.$;
-import static st3s0.scaffoldermavenplugin.mojo.AddUsefulSetOfDependencies.MOJO_NAME;
+import static st3s0f.scaffoldermavenplugin.mojo.AddUsefulSetOfDependencies.MOJO_NAME;
 
 @Mojo(name = MOJO_NAME)
 @Setter

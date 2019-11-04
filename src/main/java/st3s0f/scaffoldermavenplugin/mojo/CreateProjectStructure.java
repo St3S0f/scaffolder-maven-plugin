@@ -1,4 +1,4 @@
-package st3s0.scaffoldermavenplugin.mojo;
+package st3s0f.scaffoldermavenplugin.mojo;
 
 import com.google.common.base.Splitter;
 import lombok.Getter;
@@ -13,7 +13,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import static java.lang.String.format;
-import static st3s0.scaffoldermavenplugin.mojo.CreateProjectStructure.MOJO_NAME;
+import static st3s0f.scaffoldermavenplugin.mojo.CreateProjectStructure.MOJO_NAME;
 
 @Mojo( name = MOJO_NAME)
 @Setter

@@ -1,4 +1,4 @@
-package st3s0.scaffoldermavenplugin;
+package st3s0f.scaffoldermavenplugin;
 
 import org.apache.maven.project.MavenProject;
 import org.joox.Match;
@@ -8,7 +8,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
-import st3s0.scaffoldermavenplugin.restclient.RestClient;
+import st3s0f.scaffoldermavenplugin.restclient.RestClient;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;

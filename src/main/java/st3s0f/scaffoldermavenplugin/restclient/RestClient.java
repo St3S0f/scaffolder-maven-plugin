@@ -1,4 +1,4 @@
-package st3s0.scaffoldermavenplugin.restclient;
+package st3s0f.scaffoldermavenplugin.restclient;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,7 +9,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
-import st3s0.scaffoldermavenplugin.restclient.jakson.MvnCentralRepoResponse;
+import st3s0f.scaffoldermavenplugin.restclient.jakson.MvnCentralRepoResponse;
 
 import java.net.InetSocketAddress;
 import java.net.Proxy;

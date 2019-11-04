@@ -1,11 +1,11 @@
-package st3s0.scaffoldermavenplugin.mojo;
+package st3s0f.scaffoldermavenplugin.mojo;
 
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
 import org.joox.Match;
-import st3s0.scaffoldermavenplugin.Utils;
+import st3s0f.scaffoldermavenplugin.Utils;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -13,7 +13,7 @@ import java.nio.file.Path;
 
 import static java.lang.String.format;
 import static org.joox.JOOX.$;
-import static st3s0.scaffoldermavenplugin.Utils.toPrettyString;
+import static st3s0f.scaffoldermavenplugin.Utils.toPrettyString;
 
 public abstract class BaseMojo extends AbstractMojo {
 
