@@ -24,16 +24,23 @@ public class AddUsefulSetOfDependencies extends BaseMojo {
 
     public static final String MOJO_NAME = "useful-set-of-dependencies";
 
+
+
     @Parameter(defaultValue = "${project}", required = true, readonly = false)
     MavenProject mavenProject;
 
     // used in tests
     private Path pathToPom;
 
+    private final BiFunction<String, String, String> lastVersionOfFunction;
+
+    public AddUsefulSetOfDependencies() {
+        lastVersionOfFunction = Utils.lastVersionOfFunction();
+    }
+
     @Override
     protected Match modifyPom(Match pom) {
         getLog().info(format("[%s] adding useful set of deps", getMojoName()));
-        BiFunction<String, String, String> lastVersionOf = Utils.lastVersionOfFunction();
         List.of(
                 Tuple.of("org.projectlombok", "lombok", "compile"),
                 Tuple.of("com.google.guava", "guava", "compile"),
@@ -43,25 +50,48 @@ public class AddUsefulSetOfDependencies extends BaseMojo {
                 Tuple.of("com.cedarsoftware", "java-util", "compile"),
                 Tuple.of("com.google.truth", "truth", "test")
         ).forEach(t -> addDependencyIfMissing(
-                pom, t._1(), t._2(), lastVersionOf.apply(t._1(), t._2()), t._3()
+                pom, t._1(), t._2(), lastVersionOfFunction.apply(t._1(), t._2()), t._3()
         ));
+
+        Match dm = Utils.findOrCreate(pom, "dependencyManagement");
+        Match dmDeps = Utils.findOrCreate(dm, "dependencies");
+        if (hasNotChildWithArtifactIdMatching(dmDeps, "spring-boot-dependencies")) {
+            appendLatestVersionOfDependency(dmDeps,"org.springframework.boot","spring-boot-dependencies", "import", "pom");
+        }
+
+
         return pom;
     }
 
+    private boolean hasNotChildWithArtifactIdMatching(Match parent, String artifactId) {
+        return parent.children().each().stream().filter(d -> d.child("artifactId").text().equals(artifactId)).findAny().isEmpty();
+    }
+
+    private Match appendDependency(Match parent, String g, String a, String v, String scope, String type) {
+        Match dep = $("dependency").append(
+                $("groupId", g),
+                $("artifactId", a),
+                $("version", v),
+                $("scope", scope)
+        );
+
+        return parent.append(
+                type != null
+                 ? dep.append($("type", type))
+                 : dep
+        );
+    }
+
+    private Match appendLatestVersionOfDependency(Match parent, String g, String a, String scope, String type) {
+        return appendDependency(parent, g, a, lastVersionOfFunction.apply(g,a),scope, type);
+    }
 
     private void addDependencyIfMissing(Match pom, String groupId, String artifactId, String version, String scope) {
         final Match dependencies = Utils.findOrCreate(pom, "dependencies");
 
-        if (dependencies.children().each().stream().filter(d -> d.child("artifactId").text().equals(artifactId)).findAny().isEmpty()) {
+        if (hasNotChildWithArtifactIdMatching(dependencies, artifactId)) {
             getLog().info(format("%s not found, adding it", artifactId));
-            dependencies.append(
-                    $("dependency").append(
-                            $("groupId", groupId),
-                            $("artifactId", artifactId),
-                            $("version", version),
-                            $("scope", scope)
-                    )
-            );
+            appendDependency(dependencies, groupId,artifactId,version,scope,null);
         } else {
             getLog().info(format("%s already present", artifactId));
         }

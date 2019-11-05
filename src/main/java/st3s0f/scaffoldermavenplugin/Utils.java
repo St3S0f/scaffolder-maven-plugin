@@ -76,12 +76,12 @@ public class Utils {
     }
 
     public static Match findOrCreate(Match parent, String element) {
-        Match a = parent.find(element);
-        if (a == null) {
-            a = $(element);
-            parent.append(a);
+        Match existing = parent.find(element);
+        if (existing.isEmpty()) {
+            Match created = $(element);
+            parent.append(created);
         }
-        return a;
+        return parent.find(element);
     }
 
     public static BiFunction<String,String,String> lastVersionOfFunction() {
