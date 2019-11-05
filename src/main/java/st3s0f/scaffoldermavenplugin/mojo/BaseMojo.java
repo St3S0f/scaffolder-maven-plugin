@@ -32,7 +32,7 @@ public abstract class BaseMojo extends AbstractMojo {
     /**
      * Mojos generic actions
      */
-    protected void doStuff(Match pom) {}
+    protected void doStuff(Match pom) throws MojoExecutionException {}
 
     @Override
     public final void execute() throws MojoExecutionException {

@@ -15,9 +15,8 @@ import java.util.function.BiFunction;
 
 import static java.lang.String.format;
 import static org.joox.JOOX.$;
-import static st3s0f.scaffoldermavenplugin.mojo.AddUsefulSetOfDependencies.MOJO_NAME;
 
-@Mojo(name = MOJO_NAME)
+@Mojo(name = AddUsefulSetOfDependencies.MOJO_NAME)
 @Setter
 @Getter
 public class AddUsefulSetOfDependencies extends BaseMojo {
@@ -44,7 +43,6 @@ public class AddUsefulSetOfDependencies extends BaseMojo {
         List.of(
                 Tuple.of("org.projectlombok", "lombok", "compile"),
                 Tuple.of("com.google.guava", "guava", "compile"),
-                Tuple.of("org.apache.commons", "commons-lang3", "compile"),
                 Tuple.of("org.apache.commons", "commons-lang3", "compile"),
                 Tuple.of("io.vavr", "vavr", "compile"),
                 Tuple.of("com.cedarsoftware", "java-util", "compile"),
@@ -90,10 +88,10 @@ public class AddUsefulSetOfDependencies extends BaseMojo {
         final Match dependencies = Utils.findOrCreate(pom, "dependencies");
 
         if (hasNotChildWithArtifactIdMatching(dependencies, artifactId)) {
-            getLog().info(format("%s not found, adding it", artifactId));
+            getLog().info(format("[%s] %s not found, adding it now", getMojoName(),artifactId));
             appendDependency(dependencies, groupId,artifactId,version,scope,null);
         } else {
-            getLog().info(format("%s already present", artifactId));
+            getLog().info(format("[%s] %s already present", getMojoName(),artifactId));
         }
     }
 

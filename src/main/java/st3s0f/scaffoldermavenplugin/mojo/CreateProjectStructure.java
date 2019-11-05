@@ -13,9 +13,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import static java.lang.String.format;
-import static st3s0f.scaffoldermavenplugin.mojo.CreateProjectStructure.MOJO_NAME;
 
-@Mojo( name = MOJO_NAME)
+@Mojo(name = CreateProjectStructure.MOJO_NAME)
 @Setter
 @Getter
 public class CreateProjectStructure extends BaseMojo {
