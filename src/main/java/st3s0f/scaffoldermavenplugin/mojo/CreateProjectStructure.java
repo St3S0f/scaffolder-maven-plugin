@@ -22,10 +22,10 @@ public class CreateProjectStructure extends BaseMojo {
     public static final String MOJO_NAME = "create-project-structure";
 
     @Parameter(defaultValue = "${project}", required = true, readonly = false)
-    MavenProject mavenProject;
-
+    private MavenProject mavenProject;
     // used in tests
     private Path pathToPom;
+
 
     @Override
     protected void doStuff(Match pom) {
@@ -34,7 +34,7 @@ public class CreateProjectStructure extends BaseMojo {
         String artifactId = pom.child("artifactId").text();
 
         ArrayList<String> pathTokens = new ArrayList<>(Splitter.on(".").splitToList(groupId));
-        pathTokens.add(artifactId.replace("-",""));
+        pathTokens.add(artifactId.replace("-", ""));
         pathTokens.add(0, "src/main/java");
         Paths.get(pathToPom.getParent().toString(), pathTokens.toArray(new String[pathTokens.size()])).toFile().mkdirs();
         pathTokens.set(0, "src/test/main");

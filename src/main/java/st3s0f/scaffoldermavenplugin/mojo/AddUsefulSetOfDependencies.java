@@ -23,8 +23,6 @@ public class AddUsefulSetOfDependencies extends BaseMojo {
 
     public static final String MOJO_NAME = "useful-set-of-dependencies";
 
-
-
     @Parameter(defaultValue = "${project}", required = true, readonly = false)
     MavenProject mavenProject;
 

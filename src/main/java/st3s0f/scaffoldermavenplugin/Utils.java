@@ -1,5 +1,10 @@
 package st3s0f.scaffoldermavenplugin;
 
+import com.github.javaparser.ast.expr.NormalAnnotationExpr;
+import com.github.javaparser.ast.visitor.GenericVisitorAdapter;
+import com.github.javaparser.utils.SourceRoot;
+import io.vavr.Tuple;
+import io.vavr.Tuple2;
 import org.apache.maven.project.MavenProject;
 import org.joox.Match;
 import org.springframework.boot.SpringApplication;
@@ -20,9 +25,11 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathFactory;
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.StringWriter;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Optional;
 import java.util.function.BiFunction;
 
 import static org.joox.JOOX.$;
@@ -89,4 +96,37 @@ public class Utils {
         return (BiFunction<String, String, String>) ac.getBean("getLatestVersionOf");
     }
 
+    public static Path getRootJavaSourcePath(Path pathToPom) {
+        return Paths.get(
+                pathToPom.getParent().toString(),
+                "src/main/java"
+        );
+    }
+
+    public static Path getMainJavaPackagePath(Match pom, Path pathToPom) {
+        return Paths.get(
+                getRootJavaSourcePath(pathToPom).toAbsolutePath().toString(),
+                pom.child("groupId").text().replaceAll("\\.","/"),
+                pom.child("artifactId").text().replace("-","")
+        );
+    }
+
+    public static String getMainJavaPackage(Match pom, Path pathToPom) {
+        return pom.child("groupId").text() + "." + pom.child("artifactId").text().replace("-","");
+    }
+
+    public static Tuple2<String,String> getPackageAndClassPartsFor(String s) {
+        String[] tokens = s.split("(?=\\p{Upper})");
+        if (tokens.length > 1) {
+            return Tuple.of(
+                    tokens[0].endsWith(".") ? tokens[0].substring(0, tokens[0].length()-1) : tokens[0],
+                    tokens[1]
+            );
+        } else {
+            return Tuple.of(
+                    "",
+                    tokens[0]
+            );
+        }
+    }
 }

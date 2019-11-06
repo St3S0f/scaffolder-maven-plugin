@@ -1,19 +1,16 @@
 package st3s0f.scaffoldermavenplugin.mojo;
 
-import com.github.javaparser.ast.CompilationUnit;
-import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.commons.io.FileUtils;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 import org.joox.Match;
+import st3s0f.scaffoldermavenplugin.JavaParserUtils;
+import st3s0f.scaffoldermavenplugin.Utils;
 
-import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 @Mojo(name = CreateValidateRestBackend.MOJO_NAME)
 @Setter
@@ -34,28 +31,18 @@ public class CreateValidateRestBackend extends BaseMojo {
 
     @Override
     protected void doStuff(Match pom) throws MojoExecutionException {
-        CompilationUnit cu = new CompilationUnit();
+        Path rootJavaSourcePath = Utils.getRootJavaSourcePath(pathToPom);
 
-        ClassOrInterfaceDeclaration user = cu
-                .setPackageDeclaration("x.y")
-                .addClass("User");
+        Boolean hasSpringBootApp = JavaParserUtils.hasAnyAnnotation(rootJavaSourcePath, "SpringBootApplication");
+        System.out.println(String.format("hasSpringBootApp: %s", hasSpringBootApp));
 
-        user
-                .addAnnotation(lombok.Data.class)
-                .addField("String", "name");
-
-
-        try {
-            FileUtils.write(
-                    Paths.get(
-                            pathToPom.getParent().toString(),
-                            "src/main/java",
-                            "x/y/User.java"
-                    ).toFile(),
-                    cu.toString()
-            );
-        } catch (IOException e) {
-            throw new MojoExecutionException(e.toString());
+        if (!hasSpringBootApp) {
+            JavaParserUtils.createSpringBootApp(rootJavaSourcePath);
         }
+
+        JavaParserUtils.createJpaEntity(rootJavaSourcePath, "model.User");
+        JavaParserUtils.createJpaEntity(rootJavaSourcePath, "model.Group");
+
     }
+
 }
