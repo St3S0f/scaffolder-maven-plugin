@@ -37,7 +37,7 @@ public class CreateProjectStructure extends BaseMojo {
         pathTokens.add(artifactId.replace("-", ""));
         pathTokens.add(0, "src/main/java");
         Paths.get(pathToPom.getParent().toString(), pathTokens.toArray(new String[pathTokens.size()])).toFile().mkdirs();
-        pathTokens.set(0, "src/test/main");
+        pathTokens.set(0, "src/test/java");
         Paths.get(pathToPom.getParent().toString(), pathTokens.toArray(new String[pathTokens.size()])).toFile().mkdirs();
         Paths.get(pathToPom.getParent().toString(), "src/main/resources").toFile().mkdirs();
         Paths.get(pathToPom.getParent().toString(), "src/test/resources").toFile().mkdirs();

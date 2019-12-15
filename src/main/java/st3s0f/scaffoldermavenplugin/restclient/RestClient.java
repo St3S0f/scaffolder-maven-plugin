@@ -32,8 +32,8 @@ public class RestClient {
         return builder
                 .requestFactory(() -> {
                     SimpleClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();
-                    Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("localhost", 3128));
-                    requestFactory.setProxy(proxy);
+                    //Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("localhost", 3128));
+                    //requestFactory.setProxy(proxy);
                     return requestFactory;
                 })
                 .build();
